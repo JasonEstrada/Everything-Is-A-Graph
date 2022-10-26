@@ -661,7 +661,6 @@ public class Ventana extends javax.swing.JFrame {
                 
             }
             camino = inicio + " -> " + camino;
-            System.out.println("hi");
         }
 
         return camino;
