@@ -136,7 +136,6 @@ public class Ventana extends javax.swing.JFrame {
         });
 
         bgLbl.setBackground(new java.awt.Color(0, 0, 0));
-        bgLbl.setForeground(new java.awt.Color(0, 0, 0));
         bgLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/background.png"))); // NOI18N
         bgLbl.setText("   ");
         bgLbl.setToolTipText("");
@@ -152,14 +151,16 @@ public class Ventana extends javax.swing.JFrame {
         vistaPnLayout.setHorizontalGroup(
             vistaPnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(vistaPnLayout.createSequentialGroup()
-                .addComponent(bgLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 2000, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(bgLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 2125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         vistaPnLayout.setVerticalGroup(
             vistaPnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(vistaPnLayout.createSequentialGroup()
-                .addComponent(bgLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 2000, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(bgLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 1302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(685, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(vistaPn);
@@ -371,11 +372,30 @@ public class Ventana extends javax.swing.JFrame {
             c = 0;
             infoLbl.setText("Now you are setting vertices. Click to workspace to add a new vertex");
             if (!IsOnTop(evt.getPoint())) {
-                String name = JOptionPane.showInputDialog("Enter the vertex name");
+
+                boolean c = false;
+                String name;
+
+                do {
+
+                    name = JOptionPane.showInputDialog("Enter the vertex name");
+                    for (Vertex vertex : vectorVertices) {
+                        if (vertex.getName().equals(name)) {
+                            c = true;
+                            infoLbl.setText("This name is already define, set another one");
+                            break;
+                        } else {
+                            c = false;
+                        }
+                    }
+
+                } while (c == true);
+
                 if (name != null) {
                     this.vectorVertices.add(new Vertex(evt.getX(), evt.getY(), name));
                     draw(-1);
                 }
+
             }
 
         } else if (edgeBtn.isSelected() && evt.getButton() == MouseEvent.BUTTON1) {
@@ -658,7 +678,7 @@ public class Ventana extends javax.swing.JFrame {
                 }
 
                 i = busqueda(recorridos, recorridos[i][j]);
-                
+
             }
             camino = inicio + " -> " + camino;
         }
