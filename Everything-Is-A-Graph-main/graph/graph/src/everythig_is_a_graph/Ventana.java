@@ -658,8 +658,10 @@ public class Ventana extends javax.swing.JFrame {
                 }
 
                 i = busqueda(recorridos, recorridos[i][j]);
+                
             }
             camino = inicio + " -> " + camino;
+            System.out.println("hi");
         }
 
         return camino;
