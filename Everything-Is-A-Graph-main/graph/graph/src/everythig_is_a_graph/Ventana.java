@@ -379,6 +379,10 @@ public class Ventana extends javax.swing.JFrame {
                 do {
 
                     name = JOptionPane.showInputDialog("Enter the vertex name");
+                    while (name.trim().equals("")) {
+                        infoLbl.setText("Please set a name");
+                        name = JOptionPane.showInputDialog("Enter the vertex name");
+                    }
                     for (Vertex vertex : vectorVertices) {
                         if (vertex.getName().equals(name)) {
                             c = true;
@@ -390,7 +394,7 @@ public class Ventana extends javax.swing.JFrame {
                     }
 
                 } while (c == true);
-
+                infoLbl.setText("Now you are setting vertices. Click to workspace to add a new vertex");
                 if (name != null) {
                     this.vectorVertices.add(new Vertex(evt.getX(), evt.getY(), name));
                     draw(-1);
