@@ -5,12 +5,16 @@
  */
 package everythig_is_a_graph;
 
+import everythig_is_a_graph.Edge;
+import everythig_is_a_graph.Vertex;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import everythig_is_a_graph.name;
+import java.awt.Color;
 
 /**
  *
@@ -23,15 +27,21 @@ public class Ventana extends javax.swing.JFrame {
      */
     public Ventana() {
         initComponents();
+        ButtonTransparent();
+        this.setLocationRelativeTo(null);
         vertexBtn.setSelected(true);
         infoLbl.setText("Now you are setting vertices");
         this.vectorVertices = new Vector<>();
         this.vectorEdges = new Vector<>();
+        this.vecReco = new Vector<>();
         infoDelete.setVisible(false);
     }
 
+    name p = new name();
     private Vector<Vertex> vectorVertices;
     private Vector<Edge> vectorEdges;
+    private Vector<Vertex> vecReco;
+    private Vertex recovertex[][];
     private Point p1, p2, p1_del, p2_del;
     private int adyacency[][], i_ady = 0, deleteVertex;
     private String prev_info;
@@ -40,7 +50,9 @@ public class Ventana extends javax.swing.JFrame {
     private String caminomin = "";
     private String inicio, fin;
     private Vertex start, end;
+    private String name, distance;
     private int c = 0;
+
 
     ;
 //    private Vertex vertexMove;
@@ -103,11 +115,20 @@ public class Ventana extends javax.swing.JFrame {
         deleteBtn = new javax.swing.JToggleButton();
         floydBtn = new javax.swing.JButton();
         infoDelete = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1130, 670));
         setResizable(false);
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(800, 600));
+        jPanel1.setMaximumSize(new java.awt.Dimension(1130, 670));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1130, 670));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1130, 670));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jScrollPane1.setMaximumSize(new java.awt.Dimension(1130, 670));
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(1130, 670));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(1130, 670));
 
         vistaPn.setBackground(new java.awt.Color(247, 232, 236));
         vistaPn.setOpaque(false);
@@ -152,46 +173,49 @@ public class Ventana extends javax.swing.JFrame {
             vistaPnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(vistaPnLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(bgLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 2125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(bgLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 1685, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(305, Short.MAX_VALUE))
         );
         vistaPnLayout.setVerticalGroup(
             vistaPnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(vistaPnLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(bgLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 1302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(685, Short.MAX_VALUE))
+                .addComponent(bgLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 1460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(529, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(vistaPn);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 830, 550));
 
         infoLbl.setFont(new java.awt.Font("Ebrima", 0, 14)); // NOI18N
         infoLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         infoLbl.setText("You are doing something");
         infoLbl.setAlignmentX(0.5F);
+        jPanel1.add(infoLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(79, 595, 713, -1));
 
-        vertexBtn.setText("Vertex");
         vertexBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 vertexBtnActionPerformed(evt);
             }
         });
+        jPanel1.add(vertexBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 70, 160, 70));
 
-        edgeBtn.setText("Edge");
         edgeBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edgeBtnActionPerformed(evt);
             }
         });
+        jPanel1.add(edgeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 180, 160, 60));
 
-        deleteBtn.setText("Delete");
+        deleteBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/box.png"))); // NOI18N
         deleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteBtnActionPerformed(evt);
             }
         });
+        jPanel1.add(deleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 270, 150, 120));
 
-        floydBtn.setText("Floyd-Warshall");
         floydBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 floydBtnMouseEntered(evt);
@@ -205,54 +229,17 @@ public class Ventana extends javax.swing.JFrame {
                 floydBtnActionPerformed(evt);
             }
         });
+        jPanel1.add(floydBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 420, 180, 110));
 
-        infoDelete.setText("?");
         infoDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 infoDeleteActionPerformed(evt);
             }
         });
+        jPanel1.add(infoDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 300, -1, 50));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 888, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(vertexBtn)
-                        .addGap(135, 135, 135)
-                        .addComponent(edgeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(126, 126, 126)
-                        .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(infoDelete)
-                        .addGap(90, 90, 90)
-                        .addComponent(floydBtn))
-                    .addComponent(infoLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 713, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(75, 75, 75))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(vertexBtn)
-                    .addComponent(edgeBtn)
-                    .addComponent(deleteBtn)
-                    .addComponent(infoDelete)
-                    .addComponent(floydBtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(infoLbl)
-                .addContainerGap())
-        );
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/backg6.gif"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1190, 860));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -373,8 +360,7 @@ public class Ventana extends javax.swing.JFrame {
             infoLbl.setText("Now you are setting vertices. Click to workspace to add a new vertex");
             if (!IsOnTop(evt.getPoint())) {
 
-                boolean c = false;
-                String name;
+                boolean m = false;
 
                 do {
 
@@ -383,23 +369,21 @@ public class Ventana extends javax.swing.JFrame {
                         infoLbl.setText("Please set a name");
                         name = JOptionPane.showInputDialog("Enter the vertex name");
                     }
+
                     for (Vertex vertex : vectorVertices) {
                         if (vertex.getName().equals(name)) {
-                            c = true;
-                            infoLbl.setText("This name is already define, set another one");
+                            m = true;
                             break;
                         } else {
-                            c = false;
+                            m = false;
                         }
                     }
+                } while (m == true);
 
-                } while (c == true);
-                infoLbl.setText("Now you are setting vertices. Click to workspace to add a new vertex");
                 if (name != null) {
                     this.vectorVertices.add(new Vertex(evt.getX(), evt.getY(), name));
                     draw(-1);
                 }
-
             }
 
         } else if (edgeBtn.isSelected() && evt.getButton() == MouseEvent.BUTTON1) {
@@ -417,11 +401,16 @@ public class Ventana extends javax.swing.JFrame {
                         if (p2.equals(p1)) {
                             infoLbl.setText("You can't do that, only between different vertices");
                         } else if (!ThereIsAnEdge(p1, p2)) {
-                            String distance = JOptionPane.showInputDialog("Enter the distance between vertices");
+                            distance = JOptionPane.showInputDialog("Enter the distance between vertices");
                             if (distance != null) {
                                 while (!isNumber(distance)) {
                                     distance = JOptionPane.showInputDialog("Must be a number. Please try again");
                                 }
+
+                                while (Double.parseDouble(distance) <= 0) {
+                                    distance = JOptionPane.showInputDialog("The distance cannot be less than zero");
+                                }
+
                                 this.vectorEdges.add(new Edge(p1.x, p1.y, p2.x, p2.y, distance));
                             }
                         } else {
@@ -482,14 +471,6 @@ public class Ventana extends javax.swing.JFrame {
             if (c == 0) {
                 matrices();
                 cost1(cost);
-
-                for (int k = 0; k < cost.length; k++) {
-                    System.out.println("");
-                    for (int l = 0; l < cost.length; l++) {
-                        System.out.print(cost[k][l] + "     ");
-                    }
-                }
-
                 recorrido1(recorridos);
                 floydw(cost, recorridos);
             }
@@ -501,7 +482,7 @@ public class Ventana extends javax.swing.JFrame {
                         if (vertex.isAislado() == false) {
                             start = vertex;
                         } else {
-                            infoLbl.setText("Ingresa un vértice que no esté aislado");
+                            infoLbl.setText("Enter a non-isolated vertex");
                         }
                     } else {
                         if (vertex.isAislado() == false) {
@@ -510,7 +491,7 @@ public class Ventana extends javax.swing.JFrame {
 
                             floyd1();
                         } else {
-                            infoLbl.setText("Ingresa un vértice que no esté aislado");
+                            infoLbl.setText("Enter a non-isolated vertex");
                         }
                     }
                     draw(-1);
@@ -560,6 +541,7 @@ public class Ventana extends javax.swing.JFrame {
         adyacency = new int[vectorVertices.size()][vectorVertices.size()];
         cost = new double[vectorVertices.size()][vectorVertices.size()];
         recorridos = new String[vectorVertices.size()][vectorVertices.size()];
+        recovertex = new Vertex[vectorVertices.size()][vectorVertices.size()];
         for (int i = 0; i < adyacency.length; i++) {
             Point vertex1 = new Point(vectorVertices.get(i).getX(), vectorVertices.get(i).getY());
             for (int j = 0; j < adyacency.length; j++) {
@@ -603,10 +585,46 @@ public class Ventana extends javax.swing.JFrame {
 
             System.out.println("      ");
             caminomin = min(recorridos, inicio, fin, caminomin, cost);
+            
+            
+
             System.out.println(caminomin);
+            p.setVisible(true);
+            p.ruta.setText(caminomin);
+            p.distancia.setText(Double.toString(distance(cost, inicio, fin)));
+            highlight();
 
         }
 
+    }
+    
+    
+       public void highlight(){
+        System.out.println(vecReco.size());
+        Graphics g = vistaPn.getGraphics();
+        int i=0;
+        int x1=0, y1=0, x2=0, y2=0;
+        for (Vertex vertex : vecReco) {
+            System.out.println("Entra a vecReco");
+            if(i == 0){
+                x1 = vertex.getX(); //[a,b,c,d,e] aqui toma el x y y del primer vértice del vector
+                y1 = vertex.getY();
+            }else{
+                x2 = vertex.getX();//aqui toma el siguiente a x1
+                y2 = vertex.getY();
+                for (Edge edge: vectorEdges) {
+                    System.out.println("Entra a vectorEdges");
+                    if((edge.getX1() == x1 && edge.getY1() == y1 && edge.getX2() == x2 && edge.getY2() == y2) || (edge.getX1() == x2 && edge.getY1() == y2 && edge.getX2() == x1 && edge.getY2() == y1)){
+                        edge.mycolor = new Color(255, 0, 0);
+                        System.out.println("Cambio color");
+                    }
+                    edge.pintar(g);
+                }
+                x1 = x2;//actualiza el primero por el segundo y al repetir x2 toma los valores del siguiente vertice
+                y1 = y2;
+            }
+            i++;
+        }
     }
 
     public void cost1(double costos[][]) {
@@ -630,6 +648,7 @@ public class Ventana extends javax.swing.JFrame {
                     recorridos[i][j] = "-";
                 } else {
                     recorridos[i][j] = vectorVertices.get(j).getName();
+                    recovertex[i][j] = vectorVertices.get(i);
                 }
             }
         }
@@ -645,6 +664,7 @@ public class Ventana extends javax.swing.JFrame {
         } else {
             distance = costos[i][j];
         }
+
         return distance;
     }
 
@@ -652,11 +672,14 @@ public class Ventana extends javax.swing.JFrame {
         int i, j, k;
 
         for (k = 0; k < vectorVertices.size(); k++) {
-            for (i = 0; i < vectorVertices.size(); i++) {
-                for (j = 0; j < vectorVertices.size(); j++) {
-                    if (costos[i][k] + costos[k][j] < costos[i][j]) {
-                        costos[i][j] = costos[i][k] + costos[k][j];
-                        recorridos[i][j] = vectorVertices.get(k).getName();
+            for (j = 0; j < vectorVertices.size(); j++) {
+                for (i = 0; i < vectorVertices.size(); i++) {
+                    if (j != k && i != j && k != i) {
+                        if (costos[i][k] + costos[k][j] < costos[i][j]) {
+                            costos[i][j] = costos[i][k] + costos[k][j];
+                            recorridos[i][j] = vectorVertices.get(k).getName();
+                            recovertex[i][j] = vectorVertices.get(j);
+                        }
                     }
                 }
             }
@@ -665,26 +688,25 @@ public class Ventana extends javax.swing.JFrame {
     }
 
     public String min(String recorridos[][], String inicio, String fin, String camino, double costos[][]) {
-        int i = busqueda(recorridos, fin);
-        int j = busqueda(recorridos, inicio);
+        int j = busqueda(recorridos, fin);
+        int i = busqueda(recorridos, inicio);
+        vecReco.add(start);
 
         if (costos[i][j] == Double.POSITIVE_INFINITY) {
             camino = "";
-
         } else {
-            camino = fin;
             while (true) {
-                if (!recorridos[j][i].equals(fin)) {
-                    camino = recorridos[j][i] + " -> " + camino;
-                    fin = recorridos[j][i];
-                } else {
+                if (recorridos[i][j].equals(fin)) {
+                    camino = camino + "-" + fin;
                     break;
+                } else {
+                    camino = camino + "- " + recorridos[i][j];
+                    vecReco.add(recovertex[j][i]);
                 }
-
                 i = busqueda(recorridos, recorridos[i][j]);
-
             }
-            camino = inicio + " -> " + camino;
+            
+            vecReco.add(end);
         }
 
         return camino;
@@ -701,6 +723,24 @@ public class Ventana extends javax.swing.JFrame {
             }
         }
         return pos;
+    }
+
+    public void ButtonTransparent() {
+        vertexBtn.setOpaque(false);
+        vertexBtn.setContentAreaFilled(false);
+        vertexBtn.setBorderPainted(false);
+        edgeBtn.setOpaque(false);
+        edgeBtn.setContentAreaFilled(false);
+        edgeBtn.setBorderPainted(false);
+        deleteBtn.setOpaque(false);
+        deleteBtn.setContentAreaFilled(false);
+        deleteBtn.setBorderPainted(false);
+        infoDelete.setOpaque(false);
+        infoDelete.setContentAreaFilled(false);
+        infoDelete.setBorderPainted(false);
+        floydBtn.setOpaque(false);
+        floydBtn.setContentAreaFilled(false);
+        floydBtn.setBorderPainted(false);
     }
 
     /**
@@ -733,7 +773,7 @@ public class Ventana extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Ventana().setVisible(true);
+                new Inicio().setVisible(true);
             }
         });
     }
@@ -746,6 +786,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JButton floydBtn;
     private javax.swing.JButton infoDelete;
     private javax.swing.JLabel infoLbl;
+    private javax.swing.JLabel jLabel1;
     public static javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToggleButton vertexBtn;

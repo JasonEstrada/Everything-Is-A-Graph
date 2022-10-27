@@ -19,6 +19,7 @@ public class Edge {
 
     private int x1, y1, x2, y2;
     private String distance;
+    public Color mycolor = new java.awt.Color(0,0,0);
 
     public Edge(int x1, int y1, int x2, int y2, String distance) {
         this.x1 = x1;
@@ -29,6 +30,7 @@ public class Edge {
     }
 
     public void pintar(Graphics g) {
+        g.setColor(this.mycolor);
         g.drawLine(x1, y1, x2, y2);
         Font myFont = new Font("Arial", 1, 16);
         g.setFont(myFont);
