@@ -67,7 +67,7 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_GOActionPerformed
 
     private void GOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GOMouseClicked
-        Ventana ventana = new Ventana();
+        Ventana1 ventana = new Ventana1();
         ventana.setVisible(true);
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_GOMouseClicked
