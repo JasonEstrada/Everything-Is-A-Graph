@@ -49,7 +49,7 @@ public class Ventana1 extends javax.swing.JFrame {
     private String recorridos[][];
     private String caminomin = "";
     private String inicio, fin;
-    private Vertex start, end;
+    private Vertex start, end, h;
     private String name, distance;
     private int c = 0;
 
@@ -393,6 +393,7 @@ public class Ventana1 extends javax.swing.JFrame {
                 if (new Rectangle(vertex.getX() - Vertex.radio, vertex.getY() - Vertex.radio, Vertex.radio * 2, Vertex.radio * 2).contains(evt.getPoint())) {
                     if (p1 == null) {
                         p1 = new Point(vertex.getX(), vertex.getY());
+                        h=vertex;
                         infoLbl.setText("Select the second vertex");
                         vertex.aislado = false;
                     } else {
@@ -411,7 +412,7 @@ public class Ventana1 extends javax.swing.JFrame {
                                     distance = JOptionPane.showInputDialog("The distance cannot be less than zero");
                                 }
 
-                                this.vectorEdges.add(new Edge(p1.x, p1.y, p2.x, p2.y, distance));
+                                this.vectorEdges.add(new Edge(p1.x, p1.y, p2.x, p2.y, distance, h, vertex));
                             }
                         } else {
                             infoLbl.setText("There is already an edge between these vertices");
@@ -599,31 +600,41 @@ public class Ventana1 extends javax.swing.JFrame {
     }
     
     
-       public void highlight(){
+    public void prevs(){
+        Vertex f= null;
+        int i = 0;
+        for(Vertex vertex: vecReco){
+            if(i == 0){
+                f=vertex;
+                vertex.prev = null;
+                i++;
+            }else{
+                vertex.prev = f;
+                f = vertex;
+            }
+        }
+    }
+    
+    public void highlight(){
+        prevs();
+        start.c = 1;
+        end.c = 1;
         System.out.println(vecReco.size());
         Graphics g = vistaPn.getGraphics();
         int i=0;
         int x1=0, y1=0, x2=0, y2=0;
-        for (Vertex vertex : vecReco) {
-            System.out.println("Entra a vecReco");
-            if(i == 0){
-                x1 = vertex.getX(); //[a,b,c,d,e] aqui toma el x y y del primer vértice del vector
-                y1 = vertex.getY();
-            }else{
-                x2 = vertex.getX();//aqui toma el siguiente a x1
-                y2 = vertex.getY();
-                for (Edge edge: vectorEdges) {
-                    System.out.println("Entra a vectorEdges");
-                    if((edge.getX1() == x1 && edge.getY1() == y1 && edge.getX2() == x2 && edge.getY2() == y2) || (edge.getX1() == x2 && edge.getY1() == y2 && edge.getX2() == x1 && edge.getY2() == y1)){
-                        edge.mycolor = new Color(255, 0, 0);
-                        System.out.println("Cambio color");
-                    }
-                    edge.pintar(g);
+        for (Edge edge: vectorEdges) {
+            System.out.println(edge.getv1().getName() + "-" + edge.getv2().getName());
+            if(edge.getv1().visitado == true && edge.getv2().visitado == true){
+                if((edge.getv1().prev == edge.getv2()) || (edge.getv2().prev == edge.getv1())){
+                    System.out.println("Pintado");
+                    edge.mycolor = new Color(255,0,0);
+                    edge.getv1().c++;
+                    edge.getv2().c++;
                 }
-                x1 = x2;//actualiza el primero por el segundo y al repetir x2 toma los valores del siguiente vertice
-                y1 = y2;
+
             }
-            i++;
+            edge.pintar(g);
         }
     }
 
@@ -678,7 +689,7 @@ public class Ventana1 extends javax.swing.JFrame {
                         if (costos[i][k] + costos[k][j] < costos[i][j]) {
                             costos[i][j] = costos[i][k] + costos[k][j];
                             recorridos[i][j] = vectorVertices.get(k).getName();
-                            recovertex[i][j] = vectorVertices.get(j);
+                            recovertex[i][j] = vectorVertices.get(k);
                         }
                     }
                 }
@@ -691,6 +702,7 @@ public class Ventana1 extends javax.swing.JFrame {
         int j = busqueda(recorridos, fin);
         int i = busqueda(recorridos, inicio);
         vecReco.add(start);
+        start.visitado = true;
 
         if (costos[i][j] == Double.POSITIVE_INFINITY) {
             camino = "";
@@ -701,12 +713,14 @@ public class Ventana1 extends javax.swing.JFrame {
                     break;
                 } else {
                     camino = camino + "- " + recorridos[i][j];
-                    vecReco.add(recovertex[j][i]);
+                    vecReco.add(recovertex[i][j]);
+                    recovertex[i][j].visitado = true;
                 }
                 i = busqueda(recorridos, recorridos[i][j]);
             }
             
             vecReco.add(end);
+            end.visitado = true;
         }
 
         return camino;

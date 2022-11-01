@@ -7,7 +7,6 @@ package everythig_is_a_graph;
 
 import java.awt.Font;
 import java.awt.Graphics;
-import javafx.scene.paint.Color;
 
 /**
  *
@@ -18,13 +17,19 @@ public class Vertex {
     private int x, y;
     private String name;
     public static final int radio = 20;
-    public boolean aislado;
-
+    public boolean aislado, visitado, pintado;
+    public int c;
+    public Vertex prev;
+    
     public Vertex(int x, int y, String name) {
         this.x = x;
         this.y = y;
         this.name = name;
         this.aislado = true;
+        this.visitado = false;
+        this.pintado = false;
+        this.c = 0;
+        this.prev = null;
     }
 
     public void pintar(Graphics g, int Alpha) {
