@@ -20,7 +20,7 @@ public class Vertex {
     public boolean aislado, visitado, pintado;
     public int c;
     public Vertex prev;
-    
+
     public Vertex(int x, int y, String name) {
         this.x = x;
         this.y = y;
@@ -35,10 +35,10 @@ public class Vertex {
     public void pintar(Graphics g, int Alpha) {
         g.setColor(new java.awt.Color(162, 231, 225, Alpha));
         g.fillOval(this.x - radio, this.y - radio, radio * 2, radio * 2);
-        g.setColor(new java.awt.Color(0,0,0, Alpha));
-        Font myFont = new Font ("Berlin Sans FB", Font.PLAIN, 16);
+        g.setColor(new java.awt.Color(0, 0, 0, Alpha));
+        Font myFont = new Font("Berlin Sans FB", Font.PLAIN, 16);
         g.setFont(myFont);
-        g.drawString(name, x-radio-5, y-radio-5);
+        g.drawString(name, x - radio - 5, y - radio - 5);
     }
 
     public String getName() {

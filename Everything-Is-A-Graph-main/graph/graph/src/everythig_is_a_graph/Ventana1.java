@@ -53,10 +53,7 @@ public class Ventana1 extends javax.swing.JFrame {
     private String name, distance;
     private int c = 0;
 
-
     ;
-//    private Vertex vertexMove;
-//    private int iVertex;
 
     public void draw(int deleteVertex) {
         Graphics g = vistaPn.getGraphics();
@@ -134,25 +131,12 @@ public class Ventana1 extends javax.swing.JFrame {
         vistaPn.setOpaque(false);
         vistaPn.setPreferredSize(new java.awt.Dimension(2000, 2000));
         vistaPn.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+            }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
                 vistaPnAncestorMoved(evt);
             }
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-        vistaPn.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                vistaPnMouseDragged(evt);
-            }
-        });
-        vistaPn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                vistaPnMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                vistaPnMouseReleased(evt);
             }
         });
 
@@ -310,42 +294,6 @@ public class Ventana1 extends javax.swing.JFrame {
         infoDelete.setVisible(false);
     }//GEN-LAST:event_vertexBtnActionPerformed
 
-    private void vistaPnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vistaPnMouseReleased
-        //        vertexMove = null;
-        //        iVertex = -1;
-    }//GEN-LAST:event_vistaPnMouseReleased
-
-    private void vistaPnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vistaPnMousePressed
-
-        //        if (evt.getButton() == MouseEvent.BUTTON3) {
-        //            int c = 0;
-        //            for (Vertex vertex : vectorVertices) {
-        //                if (new Rectangle(vertex.getX() - Vertex.radio, vertex.getY() - Vertex.radio, Vertex.radio * 2, Vertex.radio * 2).contains(evt.getPoint())) {
-        //                    vertexMove = vertex;
-        //                    iVertex = c;
-        //                    break;
-        //                }
-        //                c++;
-        //            }
-        //        }
-    }//GEN-LAST:event_vistaPnMousePressed
-
-    private void vistaPnMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vistaPnMouseDragged
-        //        if (vertexMove != null) {
-        //            this.vectorVertices.set(iVertex, new Vertex(evt.getX(), evt.getY(), vertexMove.getName()));
-        //            int c = 0;
-        //            for (Edge edge : vectorEdges) {
-        //                if (new Rectangle(edge.getX1() - Vertex.radio, edge.getY1() - Vertex.radio, Vertex.radio * 2, Vertex.radio * 2).contains(evt.getPoint())) {
-        //                    this.vectorEdges.set(c, new Edge(evt.getX(), evt.getY(), edge.getX2(), edge.getY2(), edge.getDistance()));
-        //                } else if (new Rectangle(edge.getX2() - Vertex.radio, edge.getY2() - Vertex.radio, Vertex.radio * 2, Vertex.radio * 2).contains(evt.getPoint())) {
-        //                    this.vectorEdges.set(c, new Edge(edge.getX1(), edge.getY1(), evt.getX(), evt.getY(), edge.getDistance()));
-        //                }
-        //                c++;
-        //            }
-        //            draw();
-        //        }
-    }//GEN-LAST:event_vistaPnMouseDragged
-
     private void vistaPnAncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_vistaPnAncestorMoved
         draw(-1);
     }//GEN-LAST:event_vistaPnAncestorMoved
@@ -393,7 +341,7 @@ public class Ventana1 extends javax.swing.JFrame {
                 if (new Rectangle(vertex.getX() - Vertex.radio, vertex.getY() - Vertex.radio, Vertex.radio * 2, Vertex.radio * 2).contains(evt.getPoint())) {
                     if (p1 == null) {
                         p1 = new Point(vertex.getX(), vertex.getY());
-                        h=vertex;
+                        h = vertex;
                         infoLbl.setText("Select the second vertex");
                         vertex.aislado = false;
                     } else {
@@ -586,8 +534,6 @@ public class Ventana1 extends javax.swing.JFrame {
 
             System.out.println("      ");
             caminomin = min(recorridos, inicio, fin, caminomin, cost);
-            
-            
 
             System.out.println(caminomin);
             p.setVisible(true);
@@ -598,37 +544,36 @@ public class Ventana1 extends javax.swing.JFrame {
         }
 
     }
-    
-    
-    public void prevs(){
-        Vertex f= null;
+
+    public void prevs() {
+        Vertex f = null;
         int i = 0;
-        for(Vertex vertex: vecReco){
-            if(i == 0){
-                f=vertex;
+        for (Vertex vertex : vecReco) {
+            if (i == 0) {
+                f = vertex;
                 vertex.prev = null;
                 i++;
-            }else{
+            } else {
                 vertex.prev = f;
                 f = vertex;
             }
         }
     }
-    
-    public void highlight(){
+
+    public void highlight() {
         prevs();
         start.c = 1;
         end.c = 1;
         System.out.println(vecReco.size());
         Graphics g = vistaPn.getGraphics();
-        int i=0;
-        int x1=0, y1=0, x2=0, y2=0;
-        for (Edge edge: vectorEdges) {
+        int i = 0;
+        int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
+        for (Edge edge : vectorEdges) {
             System.out.println(edge.getv1().getName() + "-" + edge.getv2().getName());
-            if(edge.getv1().visitado == true && edge.getv2().visitado == true){
-                if((edge.getv1().prev == edge.getv2()) || (edge.getv2().prev == edge.getv1())){
+            if (edge.getv1().visitado == true && edge.getv2().visitado == true) {
+                if ((edge.getv1().prev == edge.getv2()) || (edge.getv2().prev == edge.getv1())) {
                     System.out.println("Pintado");
-                    edge.mycolor = new Color(255,0,0);
+                    edge.mycolor = new Color(255, 0, 0);
                     edge.getv1().c++;
                     edge.getv2().c++;
                 }
@@ -718,7 +663,7 @@ public class Ventana1 extends javax.swing.JFrame {
                 }
                 i = busqueda(recorridos, recorridos[i][j]);
             }
-            
+
             vecReco.add(end);
             end.visitado = true;
         }

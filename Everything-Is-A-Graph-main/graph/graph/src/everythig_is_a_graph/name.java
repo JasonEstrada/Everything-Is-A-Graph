@@ -11,8 +11,8 @@ package everythig_is_a_graph;
  */
 public class name extends javax.swing.JFrame {
 
-    
     public String n = "";
+
     /**
      * Creates new form name
      */
@@ -97,13 +97,13 @@ public class name extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_retryMouseClicked
 
-    
     public void ButtonTransparent() {
         retry.setOpaque(false);
         retry.setContentAreaFilled(false);
         retry.setBorderPainted(false);
-     
+
     }
+
     /*
     
     *
