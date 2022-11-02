@@ -51,7 +51,7 @@ public class Ventana1 extends javax.swing.JFrame {
     private String inicio, fin;
     private Vertex start, end, h;
     private String name, distance;
-    private int c = 0;
+    private int c = 0, k = 1;
 
     ;
 
@@ -415,7 +415,16 @@ public class Ventana1 extends javax.swing.JFrame {
                 }
             }
         } else if (floydBtn.isSelected() && evt.getButton() == MouseEvent.BUTTON1) {
-
+            Graphics g = vistaPn.getGraphics();
+            for (Vertex vertex : vectorVertices) {
+                vertex.visitado = false;
+                vertex.pintado = false;
+            }
+            for (Edge edge : vectorEdges) {
+                edge.mycolor = new Color(0, 0, 0);
+                edge.pintar(g);
+            }
+            vecReco.clear();
             infoLbl.setText("Now you can choose a new way!");
             if (c == 0) {
                 matrices();
@@ -439,6 +448,7 @@ public class Ventana1 extends javax.swing.JFrame {
                             caminomin = "";
 
                             floyd1();
+                            k++;
                         } else {
                             infoLbl.setText("Enter a non-isolated vertex");
                         }
@@ -654,7 +664,10 @@ public class Ventana1 extends javax.swing.JFrame {
                 } else {
                     camino = camino + "- " + recorridos[i][j];
                     vecReco.add(recovertex[i][j]);
-                    recovertex[i][j].visitado = true;
+                    try{
+                        recovertex[i][j].visitado = true;
+                    }catch(Exception e){
+                    }
                 }
                 i = busqueda(recorridos, recorridos[i][j]);
             }
