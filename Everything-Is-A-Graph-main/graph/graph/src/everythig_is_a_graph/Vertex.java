@@ -18,7 +18,6 @@ public class Vertex {
     private String name;
     public static final int radio = 20;
     public boolean aislado, visitado, pintado;
-    public int c;
     public Vertex prev;
 
     public Vertex(int x, int y, String name) {
@@ -28,7 +27,6 @@ public class Vertex {
         this.aislado = true;
         this.visitado = false;
         this.pintado = false;
-        this.c = 0;
         this.prev = null;
     }
 

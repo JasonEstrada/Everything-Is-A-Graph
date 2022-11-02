@@ -562,8 +562,6 @@ public class Ventana1 extends javax.swing.JFrame {
 
     public void highlight() {
         prevs();
-        start.c = 1;
-        end.c = 1;
         System.out.println(vecReco.size());
         Graphics g = vistaPn.getGraphics();
         int i = 0;
@@ -574,10 +572,7 @@ public class Ventana1 extends javax.swing.JFrame {
                 if ((edge.getv1().prev == edge.getv2()) || (edge.getv2().prev == edge.getv1())) {
                     System.out.println("Pintado");
                     edge.mycolor = new Color(255, 0, 0);
-                    edge.getv1().c++;
-                    edge.getv2().c++;
                 }
-
             }
             edge.pintar(g);
         }
