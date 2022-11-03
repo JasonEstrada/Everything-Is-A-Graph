@@ -31,6 +31,7 @@ public class name extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        exit = new javax.swing.JButton();
         retry = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -40,19 +41,29 @@ public class name extends javax.swing.JFrame {
         fondito = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(500, 400));
+        setMaximumSize(new java.awt.Dimension(500, 500));
+        setMinimumSize(new java.awt.Dimension(500, 500));
+        setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(500, 500));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        retry.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reload.png"))); // NOI18N
+        exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/close (2).png"))); // NOI18N
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
+        getContentPane().add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, 50, 40));
+
+        retry.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reloading.png"))); // NOI18N
         retry.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 retryMouseClicked(evt);
             }
         });
-        getContentPane().add(retry, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 270, 70, 60));
+        getContentPane().add(retry, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 40, 40));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Ruta:");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 160, 41));
 
@@ -60,8 +71,7 @@ public class name extends javax.swing.JFrame {
         jLabel2.setText("Distancia mínima: ");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 62, 180, 41));
 
-        ruta.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        ruta.setForeground(new java.awt.Color(255, 255, 255));
+        ruta.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 36)); // NOI18N
         ruta.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
@@ -73,14 +83,14 @@ public class name extends javax.swing.JFrame {
         });
         getContentPane().add(ruta, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 180, 30));
 
-        distancia.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        distancia.setFont(new java.awt.Font("Franklin Gothic Demi Cond", 1, 36)); // NOI18N
         getContentPane().add(distancia, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, 180, 30));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, 180, 30));
 
-        fondito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondito.gif"))); // NOI18N
-        getContentPane().add(fondito, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 1030, 390));
+        fondito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/ways.png"))); // NOI18N
+        getContentPane().add(fondito, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 500));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -97,10 +107,18 @@ public class name extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_retryMouseClicked
 
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        dispose();
+    }//GEN-LAST:event_exitActionPerformed
+
     public void ButtonTransparent() {
         retry.setOpaque(false);
         retry.setContentAreaFilled(false);
         retry.setBorderPainted(false);
+        
+        exit.setOpaque(false);
+        exit.setContentAreaFilled(false);
+        exit.setBorderPainted(false);
 
     }
 
@@ -143,6 +161,7 @@ public class name extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel distancia;
+    private javax.swing.JButton exit;
     private javax.swing.JLabel fondito;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

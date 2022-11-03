@@ -5,6 +5,8 @@
  */
 package everythig_is_a_graph;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author ACER_
@@ -19,6 +21,8 @@ public class Inicio extends javax.swing.JFrame {
 
         this.setLocationRelativeTo(null);
         ButtonTransparent();
+      
+        
 
     }
 
@@ -31,15 +35,31 @@ public class Inicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        exit = new javax.swing.JButton();
         credits = new javax.swing.JButton();
         GO = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(894, 624));
+        setMinimumSize(new java.awt.Dimension(894, 624));
+        setUndecorated(true);
         setPreferredSize(new java.awt.Dimension(894, 624));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        credits.setActionCommand("");
+        exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/close (2).png"))); // NOI18N
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
+        getContentPane().add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 20, 40, 40));
+
+        credits.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                creditsMouseClicked(evt);
+            }
+        });
         getContentPane().add(credits, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, 50, 60));
 
         GO.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -55,15 +75,13 @@ public class Inicio extends javax.swing.JFrame {
         getContentPane().add(GO, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 460, 190, 80));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/INICIO.gif"))); // NOI18N
-        jLabel1.setPreferredSize(new java.awt.Dimension(894, 624));
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 920, 640));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void GOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GOActionPerformed
-
-
+      
     }//GEN-LAST:event_GOActionPerformed
 
     private void GOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GOMouseClicked
@@ -72,6 +90,15 @@ public class Inicio extends javax.swing.JFrame {
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_GOMouseClicked
 
+    private void creditsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_creditsMouseClicked
+        Credit credit = new Credit();
+        credit.setVisible(true);
+    }//GEN-LAST:event_creditsMouseClicked
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        dispose();
+    }//GEN-LAST:event_exitActionPerformed
+
     public void ButtonTransparent() {
         GO.setOpaque(false);
         GO.setContentAreaFilled(false);
@@ -79,6 +106,10 @@ public class Inicio extends javax.swing.JFrame {
         credits.setOpaque(false);
         credits.setContentAreaFilled(false);
         credits.setBorderPainted(false);
+        exit.setOpaque(false);
+        exit.setContentAreaFilled(false);
+        exit.setBorderPainted(false);
+        
     }
 
     /**
@@ -120,6 +151,7 @@ public class Inicio extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton GO;
     private javax.swing.JButton credits;
+    private javax.swing.JButton exit;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 

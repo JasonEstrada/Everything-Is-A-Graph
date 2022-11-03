@@ -103,6 +103,7 @@ public class Ventana1 extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        Exit = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         vistaPn = new javax.swing.JPanel();
         bgLbl = new javax.swing.JLabel();
@@ -116,12 +117,21 @@ public class Ventana1 extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1130, 670));
+        setUndecorated(true);
         setResizable(false);
 
         jPanel1.setMaximumSize(new java.awt.Dimension(1130, 670));
         jPanel1.setMinimumSize(new java.awt.Dimension(1130, 670));
         jPanel1.setPreferredSize(new java.awt.Dimension(1130, 670));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/close (2).png"))); // NOI18N
+        Exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, 40, 40));
 
         jScrollPane1.setMaximumSize(new java.awt.Dimension(1130, 670));
         jScrollPane1.setMinimumSize(new java.awt.Dimension(1130, 670));
@@ -131,10 +141,10 @@ public class Ventana1 extends javax.swing.JFrame {
         vistaPn.setOpaque(false);
         vistaPn.setPreferredSize(new java.awt.Dimension(2000, 2000));
         vistaPn.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
                 vistaPnAncestorMoved(evt);
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
@@ -466,6 +476,10 @@ public class Ventana1 extends javax.swing.JFrame {
                 + "To delete edge, click on the first vertex of the edge and then on the second one, both with right click.");
     }//GEN-LAST:event_infoDeleteActionPerformed
 
+    private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
+        dispose();
+    }//GEN-LAST:event_ExitActionPerformed
+
     private boolean isNumber(String n) {
         try {
             Double.parseDouble(n);
@@ -525,27 +539,7 @@ public class Ventana1 extends javax.swing.JFrame {
         caminomin = inicio;
 
         if (vectorVertices.size() != 0) {
-
-            for (int k = 0; k < cost.length; k++) {
-                System.out.println("");
-                for (int l = 0; l < cost.length; l++) {
-                    System.out.print(cost[k][l] + "     ");
-                }
-            }
-
-            System.out.println("      ");
-
-            for (int k = 0; k < recorridos.length; k++) {
-                System.out.println("");
-                for (int l = 0; l < recorridos.length; l++) {
-                    System.out.print(recorridos[k][l] + "     ");
-                }
-            }
-
-            System.out.println("      ");
             caminomin = min(recorridos, inicio, fin, caminomin, cost);
-
-            System.out.println(caminomin);
             p.setVisible(true);
             p.ruta.setText(caminomin);
             p.distancia.setText(Double.toString(distance(cost, inicio, fin)));
@@ -572,7 +566,7 @@ public class Ventana1 extends javax.swing.JFrame {
 
     public void highlight() {
         prevs();
-        System.out.println(vecReco.size());
+        
         Graphics g = vistaPn.getGraphics();
         int i = 0;
         int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
@@ -580,7 +574,6 @@ public class Ventana1 extends javax.swing.JFrame {
             System.out.println(edge.getv1().getName() + "-" + edge.getv2().getName());
             if (edge.getv1().visitado == true && edge.getv2().visitado == true) {
                 if ((edge.getv1().prev == edge.getv2()) || (edge.getv2().prev == edge.getv1())) {
-                    System.out.println("Pintado");
                     edge.mycolor = new Color(255, 0, 0);
                 }
             }
@@ -664,9 +657,9 @@ public class Ventana1 extends javax.swing.JFrame {
                 } else {
                     camino = camino + "- " + recorridos[i][j];
                     vecReco.add(recovertex[i][j]);
-                    try{
+                    try {
                         recovertex[i][j].visitado = true;
-                    }catch(Exception e){
+                    } catch (Exception e) {
                     }
                 }
                 i = busqueda(recorridos, recorridos[i][j]);
@@ -708,6 +701,10 @@ public class Ventana1 extends javax.swing.JFrame {
         floydBtn.setOpaque(false);
         floydBtn.setContentAreaFilled(false);
         floydBtn.setBorderPainted(false);
+        Exit.setOpaque(false);
+        Exit.setContentAreaFilled(false);
+        Exit.setBorderPainted(false);
+        
     }
 
     /**
@@ -748,6 +745,7 @@ public class Ventana1 extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Exit;
     private javax.swing.JLabel bgLbl;
     private javax.swing.JToggleButton deleteBtn;
     private javax.swing.JToggleButton edgeBtn;
