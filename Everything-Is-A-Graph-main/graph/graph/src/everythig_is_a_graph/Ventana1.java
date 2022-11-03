@@ -320,6 +320,7 @@ public class Ventana1 extends javax.swing.JFrame {
 
                 boolean m = false;
                 do {
+                    
 
                     name = JOptionPane.showInputDialog("Enter the vertex name");
                     while (name.trim().equals("")) {
