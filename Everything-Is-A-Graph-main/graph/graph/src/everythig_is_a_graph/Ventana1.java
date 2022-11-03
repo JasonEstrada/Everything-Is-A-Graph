@@ -319,7 +319,6 @@ public class Ventana1 extends javax.swing.JFrame {
             if (!IsOnTop(evt.getPoint())) {
 
                 boolean m = false;
-                System.out.println("xd");
                 do {
 
                     name = JOptionPane.showInputDialog("Enter the vertex name");
